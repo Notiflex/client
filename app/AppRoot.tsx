@@ -1,12 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+
+import AppNavigation from './AppNavigation';
 
 function AppRoot() {
-  return (
-    <View>
-      <Text>app</Text>
-    </View>
-  );
+  return <AppNavigation />;
 }
 
 export default AppRoot;
