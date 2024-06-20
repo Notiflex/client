@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { fonts } from '../utils/common';
 import { scale, textScale } from '../utils/ratioCalculator';
 
 export const styles = StyleSheet.create({
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     marginBottom: scale(20),
     fontSize: textScale(20),
     color: '#343A40',
-    // fontFamily: fonts.PretendardMedium,
+    fontFamily: fonts.PretendardMedium,
   },
   buttonContainer: {
     display: 'flex',
@@ -61,25 +62,25 @@ export const styles = StyleSheet.create({
   },
   kakao: {
     fontSize: textScale(16),
-    // fontFamily: fonts.PretendardBold,
+    fontFamily: fonts.PretendardBold,
     backgroundColor: '#fde40b',
     color: '#212529',
   },
   google: {
     fontSize: textScale(16),
-    // fontFamily: fonts.PretendardBold,
+    fontFamily: fonts.PretendardBold,
     backgroundColor: '#FFFFFF',
     color: '#495057',
   },
   naver: {
     fontSize: textScale(16),
-    // fontFamily: fonts.PretendardBold,
+    fontFamily: fonts.PretendardBold,
     backgroundColor: '#03c75a',
     color: '#FFFFFF',
   },
   apple: {
     fontSize: textScale(16),
-    // fontFamily: fonts.PretendardBold,
+    fontFamily: fonts.PretendardBold,
     backgroundColor: '#FFFFFF',
     color: '#495057',
   },
