@@ -2,7 +2,8 @@ import { Dimensions, PixelRatio, Platform } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const guidelineBaseWidth = 360;
+console.log('width :>> ', width);
+const guidelineBaseWidth = 375;
 
 const scale = (size: number) => (width / guidelineBaseWidth) * size;
 const textScale = (size: number) => {
