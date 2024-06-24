@@ -9,6 +9,7 @@ import KakaoImage from '../assets/images/kakao.svg';
 import NaverImage from '../assets/images/naver.svg';
 import LogoImage from '../assets/images/notiflex.svg';
 import useOsType from '../hooks/useOsType';
+import useSocialLogin from '../hooks/useSocialLogin';
 import { styles } from './LgoinScreen.style';
 
 export type RootStackParamList = {
@@ -17,8 +18,23 @@ export type RootStackParamList = {
 };
 type LoginScreenProps = StackScreenProps<RootStackParamList, 'Login'>;
 const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
+  const { signInWithKakao, unlinkKakao, signOutWithKakao } = useSocialLogin();
   const { isIos } = useOsType();
-  const handleKakaoLogin = () => {};
+  const handleKakaoLogin = async () => {
+    try {
+      await unlinkKakao();
+      await signOutWithKakao();
+      const kakaoToken = await signInWithKakao();
+      if (kakaoToken) {
+        const command = {
+          token: kakaoToken,
+        };
+        console.log('command :>> ', command);
+      }
+    } catch (error: unknown) {
+      console.log('error :>> ', error);
+    }
+  };
   const handleNaverLogin = () => {};
   const handleGoogleLogin = () => {};
   const handleAppleLogin = () => {};
