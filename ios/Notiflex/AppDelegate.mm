@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 #import <RNKakaoLogins.h>
 #import <React/RCTBundleURLProvider.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 
 @implementation AppDelegate
 
@@ -23,11 +24,16 @@
 #endif
 }
 
-- (BOOL)application:(UIApplication *)app
-  openURL:(NSURL *)url
-  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  // naver
+  if ([url.scheme isEqualToString:@"NotiflexNaverLogin"]) {
+    return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+  }
+  // kakao
   if ([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
-    return [RNKakaoLogins handleOpenUrl: url];
+    [RNKakaoLogins handleOpenUrl: url];
   }
   return NO;
 }

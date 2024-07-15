@@ -18,7 +18,8 @@ export type RootStackParamList = {
 };
 type LoginScreenProps = StackScreenProps<RootStackParamList, 'Login'>;
 const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
-  const { signInWithKakao, unlinkKakao, signOutWithKakao } = useSocialLogin();
+  const { signInWithKakao, unlinkKakao, signOutWithKakao, signInWithNaver, unlinkNaver, signOutWithNaver } =
+    useSocialLogin();
   const { isIos } = useOsType();
   const handleKakaoLogin = async () => {
     try {
@@ -35,7 +36,21 @@ const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
       console.log('error :>> ', error);
     }
   };
-  const handleNaverLogin = () => {};
+  const handleNaverLogin = async () => {
+    try {
+      await unlinkNaver();
+      await signOutWithNaver();
+      const naverToken = await signInWithNaver();
+      if (naverToken) {
+        const command = {
+          token: naverToken,
+        };
+        console.log('command :>> ', command);
+      }
+    } catch (error: unknown) {
+      console.log('error :>> ', error);
+    }
+  };
   const handleGoogleLogin = () => {};
   const handleAppleLogin = () => {};
   const handleGoBack = () => {

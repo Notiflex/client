@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-seoul/kakao-login": "^5.4.1",
+    "@react-native-seoul/naver-login": "^3.0.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "eslint-plugin-simple-import-sort": "^12.1.0",

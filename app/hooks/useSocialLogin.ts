@@ -1,9 +1,12 @@
+import { NAVER_APP_NAME, NAVER_KEY, NAVER_SECRET, NAVER_SERVICE_URL_SCHEME } from '@env';
 import { getProfile as getKakaoProfile, login, logout, unlink } from '@react-native-seoul/kakao-login';
+import NaverLogin from '@react-native-seoul/naver-login';
 import { useState } from 'react';
 
 const useSocialLogin = () => {
   const [result, setResult] = useState<any>(null);
   const [kakaoToken, setKakaoToken] = useState<string>('');
+  const [naverToken, setNaverToken] = useState<string>('');
 
   // Kakao login methods
   const signInWithKakao = async (): Promise<string> => {
@@ -54,12 +57,76 @@ const useSocialLogin = () => {
     }
   };
 
+  // Naver login methods
+  const signInWithNaver = async (): Promise<string> => {
+    try {
+      const { failureResponse, successResponse } = await NaverLogin.login({
+        appName: NAVER_APP_NAME,
+        consumerKey: NAVER_KEY,
+        consumerSecret: NAVER_SECRET,
+        serviceUrlScheme: NAVER_SERVICE_URL_SCHEME,
+      });
+      if (successResponse) {
+        const info = successResponse;
+        if (info) {
+          setResult(info);
+        }
+        return info.accessToken;
+      }
+      if (failureResponse) {
+        console.log('failureResponse error', failureResponse);
+      }
+      return '';
+    } catch (err) {
+      console.log('signInWithNaver error', err);
+      return '';
+    }
+  };
+  const getProfileWithNaver = async (): Promise<void> => {
+    try {
+      const profile = await NaverLogin.getProfile(naverToken);
+      if (profile) {
+        setResult(profile);
+      }
+    } catch (err) {
+      console.log('getProfileWithNaver error', err);
+    }
+  };
+  const unlinkNaver = async (): Promise<void> => {
+    if (!naverToken) {
+      return;
+    }
+    try {
+      await NaverLogin.deleteToken();
+      setResult('');
+      setNaverToken('');
+    } catch (err) {
+      console.log('unlinkNaver error', err);
+    }
+  };
+  const signOutWithNaver = async (): Promise<void> => {
+    if (!naverToken) {
+      return;
+    }
+    try {
+      await NaverLogin.logout();
+      setResult('');
+      setNaverToken('');
+    } catch (err) {
+      console.log('signOutWithNaver error', err);
+    }
+  };
+
   return {
     result,
     signInWithKakao,
     getProfileWithKakao,
     unlinkKakao,
     signOutWithKakao,
+    signInWithNaver,
+    getProfileWithNaver,
+    unlinkNaver,
+    signOutWithNaver,
   };
 };
 
